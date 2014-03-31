@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Custom Font</string>
+    <string name="text1">Make things as simple as possible but no simpler</string>
+	<string name="text2">ALBERT EINSTEIN</string>
+
+    <!-- Custom Fonts - List all the font names added inside assets folder -->
+    <string name="font_bold">Nexa_Bold.otf</string>
+    <string name="font_light">Nexa_Light.otf</string>
+
+</resources>

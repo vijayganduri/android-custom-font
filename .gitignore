@@ -1,0 +1,10 @@
+.factorypath
+bin
+gen
+build.sh
+.settings
+
+.classpath
+
+.project
+config
