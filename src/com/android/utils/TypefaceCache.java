@@ -1,9 +1,8 @@
 package com.android.utils;
 
-import java.util.HashMap;
-
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v4.util.LruCache;
 import android.util.Log;
 
 /**
@@ -14,20 +13,22 @@ import android.util.Log;
 public class TypefaceCache{
 
 	private static final String TAG = TypefaceCache.class.getName();
-	private static HashMap< String, Typeface > typefaceHashMap;
+
+	private static LruCache<String, Typeface> sTypefaceCache =
+			new LruCache<String, Typeface>(12);
 
 	public static Typeface get(Context ctx, String customFontName) {
 
-		if(typefaceHashMap==null){
-			typefaceHashMap = new HashMap< String, Typeface>();
+		if(sTypefaceCache == null){
+			sTypefaceCache = new LruCache<String, Typeface>(4);
 		}
 
-		Typeface typeface = typefaceHashMap.get(customFontName);
+		Typeface typeface = sTypefaceCache.get(customFontName);
 
 		if(typeface == null){
 			try {
 				typeface = Typeface.createFromAsset(ctx.getAssets(), customFontName);
-				typefaceHashMap.put(customFontName, typeface);
+				sTypefaceCache.put(customFontName, typeface);
 			} catch (Exception e) {
 				Log.e(TAG, "Typeface not loaded. Shows system font : "+e.getMessage());
 				return null;
@@ -37,9 +38,9 @@ public class TypefaceCache{
 	}
 
 	public void clear(){
-		if(typefaceHashMap!=null){
-			typefaceHashMap.clear();
-			typefaceHashMap = null;
+		if(sTypefaceCache!=null){
+			sTypefaceCache.evictAll();
+			sTypefaceCache = null;
 		}
 	}
 
